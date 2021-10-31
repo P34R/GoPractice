@@ -6,7 +6,7 @@ type Queue struct {
 
 func (f *Queue) Enqueue(value int) {
 	f.list = append(f.list, value)
-	f.list = append(f.list[len(f.list)-1:len(f.list)], f.list[0:len(f.list)-1]...)
+	f.list = append(f.list[len(f.list)-1:len(f.list)], f.list[:len(f.list)-1]...)
 }
 func (f *Queue) Dequeue() int {
 	if len(f.list) == 0 {
