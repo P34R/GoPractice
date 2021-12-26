@@ -11,5 +11,9 @@ func main() {
 	sorts.BubbleSort()
 	sorts.ShakerSort()
 	sorts.Naive()
+	sorts.InsertionSort()
 	sorts.ComSort()
+
+	sorts.SelectionSort()
+
 }

@@ -53,7 +53,7 @@ func (s *Sorts) check(message string) {
 	}
 }
 func (s *Sorts) Naive() {
-	s.data = s.unsorted
+	copy(s.data, s.unsorted)
 	for i := 0; i < len(s.data); i++ {
 		for j := i + 1; j < len(s.data); j++ {
 			if s.data[i] > s.data[j] {
@@ -64,7 +64,7 @@ func (s *Sorts) Naive() {
 	s.check("Naive")
 }
 func (s *Sorts) BubbleSort() {
-	s.data = s.unsorted
+	copy(s.data, s.unsorted)
 	for i := 0; i < len(s.data)-1; i++ {
 		for j := 0; j < len(s.data)-1; j++ {
 			if s.data[j] > s.data[j+1] {
@@ -75,7 +75,7 @@ func (s *Sorts) BubbleSort() {
 	s.check("Bubble")
 }
 func (s *Sorts) ShakerSort() {
-	s.data = s.unsorted
+	copy(s.data, s.unsorted)
 	left := 0
 	right := len(s.data) - 1
 	for left < right {
@@ -95,7 +95,7 @@ func (s *Sorts) ShakerSort() {
 	s.check("Shaker")
 }
 func (s *Sorts) ComSort() {
-	s.data = s.unsorted
+	copy(s.data, s.unsorted)
 	factor := 1.247
 	step := len(s.data) - 1
 	for step > 1 {
@@ -119,4 +119,36 @@ func (s *Sorts) ComSort() {
 		}
 	}
 	s.check("Comb")
+}
+func (s *Sorts) InsertionSort() {
+	copy(s.data, s.unsorted)
+	for i := 1; i < len(s.data); i++ {
+		x := s.data[i]
+		j := i
+		for j > 0 && s.data[j-1] > x {
+			s.data[j] = s.data[j-1]
+			j--
+		}
+		s.data[j] = x
+	}
+	s.check("Insertion")
+}
+func (s *Sorts) minimum(i, j int) int {
+	if s.data[i] > s.data[j] {
+		return j
+	}
+	return i
+}
+func (s *Sorts) SelectionSort() {
+	copy(s.data, s.unsorted)
+	for i := 0; i < len(s.data)-1; i++ {
+		min := i
+		for j := i + 1; j < len(s.data); j++ {
+			if s.data[j] < s.data[min] {
+				min = j
+			}
+		}
+		s.swap(i, min)
+	}
+	s.check("Selection")
 }
