@@ -1,7 +1,9 @@
 package src
 
 type Queue struct {
-	list []int
+	list     []int
+	size     int
+	capacity int
 }
 
 func (f *Queue) Enqueue(value int) {
