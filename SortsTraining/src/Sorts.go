@@ -152,3 +152,87 @@ func (s *Sorts) SelectionSort() {
 	}
 	s.check("Selection")
 }
+
+func (s *Sorts) partition(l, r int) int {
+	x := s.data[r]
+	less := l
+	for i := l; i < r; i++ {
+		if s.data[i] <= x {
+			s.swap(i, less)
+			less++
+		}
+	}
+	s.swap(less, r)
+	return less
+}
+
+func (s *Sorts) quickSort(l, r int) {
+	if l < r {
+		pivot := s.partition(l, r)
+		s.quickSort(l, pivot-1)
+		s.quickSort(pivot+1, r)
+	}
+}
+func (s *Sorts) QuickSort() {
+	copy(s.data, s.unsorted)
+	s.quickSort(0, len(s.data)-1)
+	s.check("QuickSort")
+}
+
+func (s *Sorts) mergeSort(buffer []int, l int, r int) {
+	if l < r {
+		var m int
+		m = (l + r) / 2
+		s.mergeSort(buffer, l, m)
+		s.mergeSort(buffer, m+1, r)
+		k := l
+		for i, j := l, m+1; i <= m || j <= r; {
+			if j > r || (i <= m && s.data[i] < s.data[j]) {
+				buffer[k] = s.data[i]
+				i++
+			} else {
+				buffer[k] = s.data[j]
+				j++
+			}
+			k++
+		}
+		for i := l; i <= r; i++ {
+			s.data[i] = buffer[i]
+		}
+	}
+}
+
+func (s *Sorts) MergeSort() {
+	copy(s.data, s.unsorted)
+	buffer := make([]int, len(s.data))
+	s.mergeSort(buffer, 0, len(s.data)-1)
+	s.check("MergeSort")
+}
+
+func (s *Sorts) heapify(n, i int) {
+	largest := i
+	l := 2*i + 1
+	r := 2*i + 2
+	if l < n && s.data[l] > s.data[largest] {
+		largest = l
+	}
+	if r < n && s.data[r] > s.data[largest] {
+		largest = r
+	}
+	if largest != i {
+		s.swap(i, largest)
+		s.heapify(n, largest)
+	}
+
+}
+func (s *Sorts) HeapSort() {
+	copy(s.data, s.unsorted)
+	for i := len(s.data)/2 - 1; i >= 0; i-- {
+		s.heapify(len(s.data), i)
+	}
+	for i := len(s.data) - 1; i >= 0; i-- {
+		s.swap(0, i)
+		s.heapify(i, 0)
+	}
+	s.check("HeapSort")
+}

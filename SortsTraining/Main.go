@@ -16,4 +16,9 @@ func main() {
 
 	sorts.SelectionSort()
 
+	sorts.QuickSort()
+
+	sorts.MergeSort()
+
+	sorts.HeapSort()
 }
