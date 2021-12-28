@@ -1,29 +1,48 @@
 package src
 
+type qNode struct {
+	key  int
+	next *qNode
+}
 type Queue struct {
-	list     []int
-	size     int
-	capacity int
+	head *qNode
+	tail *qNode
+	size int
 }
 
 func (f *Queue) Enqueue(value int) {
-	f.list = append(f.list, value)
-	f.list = append(f.list[len(f.list)-1:len(f.list)], f.list[:len(f.list)-1]...)
-}
-func (f *Queue) Dequeue() int {
-	if len(f.list) == 0 {
-		return 0 //error, empty queue
+	f.size++
+	temp := &qNode{value, nil}
+
+	if f.tail == nil {
+		f.head = temp
+		f.tail = temp
+		return
 	}
-	last := f.list[len(f.list)-1]
-	f.list = append(f.list[0 : len(f.list)-1])
-	return last
+	f.tail.next = temp
+	f.tail = f.tail.next
+
+}
+func (f *Queue) Dequeue() (r int) {
+	if f.size != 0 {
+		r = f.head.key
+		f.head = f.head.next
+		if f.head == nil {
+			f.tail = nil
+		}
+	} else {
+		panic("Queue has no elements")
+		return
+	}
+	f.size--
+	return r
 }
 func (f *Queue) Peek() int {
-	if len(f.list) == 0 {
-		return 0 //error, empty queue
+	if f.size == 0 {
+		panic("Queue has no elements")
 	}
-	return f.list[len(f.list)-1]
+	return f.head.key
 }
 func (f *Queue) Count() int {
-	return len(f.list)
+	return f.size
 }

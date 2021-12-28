@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoTask1/src"
+	"GoTask1/SimpleRealizations/src"
 	"fmt"
 )
 
@@ -19,18 +19,21 @@ func main() {
 	fmt.Println("count - ", myStack.Count())
 	fmt.Println(myStack.Pop())
 	fmt.Println("count - ", myStack.Count())
-	/*var myQueue src.Queue
-	myQueue.Enqueue(5)
-	myQueue.Enqueue(3)
+	var myQueue src.Queue
 	myQueue.Enqueue(1)
+	myQueue.Enqueue(2)
+	myQueue.Enqueue(3)
 	myQueue.Enqueue(4)
-	fmt.Println(myQueue.Count())
-	fmt.Println(myQueue.Peek())
-	fmt.Println(myQueue.Count())
-	fmt.Println(myQueue.Dequeue())
-	fmt.Println(myQueue.Count())
-	fmt.Println(myQueue.Peek())*/
-	/*var myDeque src.Deque
+	fmt.Println("size", myQueue.Count())
+	fmt.Println("peek", myQueue.Peek())
+	fmt.Println("size", myQueue.Count())
+	fmt.Println("deq", myQueue.Dequeue())
+	fmt.Println("size", myQueue.Count())
+	fmt.Println("peek", myQueue.Peek())
+	fmt.Println("deq", myQueue.Dequeue())
+	fmt.Println("deq", myQueue.Dequeue())
+	fmt.Println("deq", myQueue.Dequeue())
+	var myDeque src.Deque
 	myDeque.EnqueueFirst(1)
 	myDeque.EnqueueFirst(2)
 	myDeque.EnqueueFirst(3)
@@ -38,10 +41,16 @@ func main() {
 	myDeque.EnqueueFirst(5)
 	myDeque.EnqueueLast(6)
 	fmt.Println("DEQ FIRST: ", myDeque.DequeueFirst())
+	fmt.Println("SIZE: ", myDeque.Count())
 	fmt.Println("DEQ LAST: ", myDeque.DequeueLast())
+	fmt.Println("SIZE: ", myDeque.Count())
 	fmt.Println("DEQ FIRST: ", myDeque.DequeueFirst())
+	fmt.Println("SIZE: ", myDeque.Count())
 	fmt.Println("DEQ LAST: ", myDeque.DequeueLast())
+	fmt.Println("SIZE: ", myDeque.Count())
 	fmt.Println("DEQ FIRST: ", myDeque.DequeueFirst())
-	fmt.Println("DEQ FIRST: ", myDeque.DequeueFirst())*/
+	fmt.Println("SIZE: ", myDeque.Count())
+	fmt.Println("DEQ FIRST: ", myDeque.DequeueFirst())
+	fmt.Println("SIZE: ", myDeque.Count())
 
 }

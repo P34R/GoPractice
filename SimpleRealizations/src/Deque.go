@@ -1,44 +1,74 @@
 package src
 
+type dqNode struct {
+	key  int
+	next *dqNode
+	prev *dqNode
+}
 type Deque struct {
-	list []int
+	front *dqNode
+	rear  *dqNode
+	size  int
 }
 
 func (f *Deque) EnqueueFirst(value int) {
-	f.list = append(f.list, value)
-	f.list = append(f.list[len(f.list)-1:len(f.list)], f.list[:len(f.list)-1]...)
+	temp := &dqNode{value, nil, nil}
+	if f.front == nil {
+		f.front = temp
+		f.rear = temp
+	} else {
+		f.front.prev = temp
+		temp.next = f.front
+		f.front = temp
+	}
+	f.size++
 }
 func (f *Deque) EnqueueLast(value int) {
-	f.list = append(f.list, value)
+	temp := &dqNode{value, nil, nil}
+	if f.rear == nil {
+		f.front = temp
+		f.rear = temp
+	} else {
+		f.rear.next = temp
+		temp.prev = f.rear
+		f.rear = temp
+	}
+	f.size++
 }
 func (f *Deque) PeekFirst() int {
-	if len(f.list) == 0 {
-		return 0 //error, deque empty
-	}
-	return f.list[0]
+	return f.front.key
 }
 func (f *Deque) PeekLast() int {
-	if len(f.list) == 0 {
-		return 0 //error, deque empty
-	}
-	return f.list[len(f.list)-1]
+	return f.rear.key
 }
-func (f *Deque) DequeueFirst() int {
-	if len(f.list) == 0 {
-		return 0 //error, deque empty
+func (f *Deque) DequeueFirst() (value int) {
+	if f.size == 0 {
+		panic("Deque has no elements")
 	}
-	first := f.list[0]
-	f.list = append(f.list[1:])
-	return first
+	value = f.front.key
+	f.front = f.front.next
+	if f.front == nil {
+		f.rear = nil
+	} else {
+		f.front.prev = nil
+	}
+	f.size--
+	return value
 }
-func (f *Deque) DequeueLast() int {
-	if len(f.list) == 0 {
-		return 0 //error, deque empty
+func (f *Deque) DequeueLast() (value int) {
+	if f.size == 0 {
+		panic("Deque has no elements")
 	}
-	last := f.list[len(f.list)-1]
-	f.list = append(f.list[:len(f.list)-1])
-	return last
+	value = f.rear.key
+	f.rear = f.rear.prev
+	if f.rear == nil {
+		f.front = nil
+	} else {
+		f.rear.next = nil
+	}
+	f.size--
+	return value
 }
 func (f *Deque) Count() int {
-	return len(f.list)
+	return f.size
 }
