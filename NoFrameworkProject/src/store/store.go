@@ -1,4 +1,4 @@
-package src
+package store
 
 import (
 	"database/sql"
@@ -11,20 +11,14 @@ type Store struct {
 	db       *sql.DB
 	dish     *DishRepository
 	category *CategoryRepository
+	order    *OrderRepository
+	user     *UserRepository
 }
 
-/*
-"host=localhost dbname=projectdb port=5432 user=docker_user password=admin sslmode=disable",
-"postgres://docker_user:admin@localhost/projectdb?sslmode=disable"
-
-host.docker.internal
-
-"user=pqgotest dbname=pqgotest sslmode=verify-full"
-"postgres://pqgotest:password@localhost/pqgotest?sslmode=verify-full"
-*/
 func NewStore() *Store {
+
 	store := &Store{
-		url: "host=postgres dbname=projectdb port=5432 user=docker_user password=admin sslmode=disable",
+		url: "host=localhost dbname=projectdb port=5432 user=postgres password=admin sslmode=disable",
 	}
 
 	return store
@@ -49,18 +43,18 @@ func (s *Store) Init() {
 	}
 
 }
-func (s *Store) Open() {
+func (s *Store) Open() error {
 	db, err := sql.Open("postgres", s.url)
 	if err != nil {
 		fmt.Print("Open error ")
-		panic(err)
+		return err
 	}
 	if err := db.Ping(); err != nil {
 		fmt.Print("Ping error ")
-		panic(err)
+		return err
 	}
 	s.db = db
-	s.Init()
+	return nil
 }
 
 func (s *Store) Close() {
@@ -82,4 +76,20 @@ func (s *Store) Category() *CategoryRepository {
 		}
 	}
 	return s.category
+}
+func (s *Store) Order() *OrderRepository {
+	if s.order == nil {
+		s.order = &OrderRepository{
+			Store: s,
+		}
+	}
+	return s.order
+}
+func (s *Store) User() *UserRepository {
+	if s.user == nil {
+		s.user = &UserRepository{
+			Store: s,
+		}
+	}
+	return s.user
 }
